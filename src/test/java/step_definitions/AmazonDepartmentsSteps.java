@@ -49,8 +49,6 @@ public class AmazonDepartmentsSteps {
 		Assert.assertTrue(searchPageTitle.contains(searchedItem));
 	}
 
-	
-
 @When("I search {string} and click search")
 public void i_search_and_click_search(String searchTerm) {
   ahomepage.searchField.sendKeys(searchTerm);

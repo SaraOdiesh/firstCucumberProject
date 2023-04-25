@@ -1,17 +1,20 @@
 @login @regression
 Feature: Title of your feature
   I want to use this template for my feature file
-
-  @validlogin @loginTests @smokeTest
-  Scenario: Successful login
+  
+  
+   Background: 
     Given As a user, I am on the login page
+    
+    
+  @validlogin @smokeTest
+  Scenario: Successful login
     When I enter valid username and password
     And I click on the login button
     Then I should be on the user profile page
 
-  @invalidlogin @loginTests
+  @invalidlogin 
   Scenario Outline: Invalid username login
-    Given As a user, I am on the login page
     When I enter invalid username and valid password
     And I click on the login button
     Then I should see an error message
@@ -31,3 +34,39 @@ Feature: Title of your feature
     And I click on login button
     Then I should see an error message
     And I should not be logged in
+    
+    
+    @invalidLoginAttempts
+  Scenario Outline: Invalid credential login attempt
+  When I enter email "<email>" and password "<password>"
+  And I click on login button
+  Then I should see an error message
+  And I should not be logged in
+  
+  Examples:
+  | email                           | password         |
+  | entityadmin@primetechschool.com | hellopassword    |
+  | entityAd@primetechschool.com    | primetech@school |
+  |                                 | Testing123       |
+  | nothing@primetechschool.com     |                  |
+  
+  
+  
+  
+  @validLoginAttempts
+  Scenario Outline: valid credential login attempt
+  When I enter email "<email>" and password "<password>"
+  And I click on login button
+  Then I should be on user profile page
+  
+  Examples:
+  | email                           | password         |
+  | entityadmin@primetechschool.com | primetech@school |
+  | entityadmin@primetechschool.com | primetech@school |
+  | entityadmin@primetechschool.com | primetech@school |
+  | entityadmin@primetechschool.com | primetech@school |
+  | entityadmin@primetechschool.com | primetech@school |
+  | entityadmin@primetechschool.com | primetech@school |
+  | entityadmin@primetechschool.com | primetech@school |
+  | entityadmin@primetechschool.com | primetech@school |
+    

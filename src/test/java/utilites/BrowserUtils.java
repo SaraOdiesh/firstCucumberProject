@@ -12,6 +12,7 @@ public class  BrowserUtils{
  
 	
 	Actions action;
+	Actions act;
 	WebDriverWait wait;
 	Select letsSelect;
 	public void waitUntilElementVisible(WebElement element) {
@@ -25,12 +26,29 @@ public class  BrowserUtils{
 		
 		
 	}
+	
+	// using action class to click on an element
+	public void actionsClick(WebElement element) {
+		act = new Actions(Driver.getDriver());
+		
+	}
 	// select by visible text
 	public void selectByVisibleText(WebElement selectElement, String tobeSelectedOptionText) {
 		letsSelect = new Select(selectElement);
 		letsSelect.selectByVisibleText(tobeSelectedOptionText);
 	}
 
+	// select by value
+		public void selectByValue(WebElement selectElement, String value) {
+			letsSelect = new Select(selectElement);
+			letsSelect.selectByValue(value);
+		}
+		
+		// select by index
+		public void selectByIndex(WebElement selectElement, int index) {
+			letsSelect = new Select(selectElement);
+			letsSelect.selectByIndex(index);
+		}
 	// return the selected option from the dropdown
 	public String getSelectedOption(WebElement selectElement) {
 		letsSelect = new Select(selectElement);
@@ -42,4 +60,5 @@ public class  BrowserUtils{
 		int randomNum = rand.nextInt((999 - 100) + 1) + 100;
 		return randomNum;
 	}
+	
 }

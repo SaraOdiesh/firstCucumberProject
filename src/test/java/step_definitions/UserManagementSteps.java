@@ -14,7 +14,11 @@ public class UserManagementSteps {
 
 	LoginPage loginpage = new LoginPage();
 	BrowserUtils utils = new BrowserUtils();
-
+    
+	
+	String emailAddress;
+	String passwordInput;
+	
 	@Given("As a user, I am on the login page")
 	public void as_a_user_i_am_on_the_login_page() {
 		Driver.getDriver().get(DataReader.getProperty("appUrl"));
@@ -66,4 +70,13 @@ public class UserManagementSteps {
 		utils.actionsSendKeys(loginpage.emailField, DataReader.getProperty("username"));
 		utils.actionsSendKeys(loginpage.passwordField, "helloWorld123");
 	}
+	// scenario outline steps
+
+		@When("I enter email {string} and password {string}")
+		public void i_enter_email_and_password(String email, String password) {
+			emailAddress = email;
+			passwordInput = password;
+		    utils.actionsSendKeys(loginpage.emailField, email);
+		    utils.actionsSendKeys(loginpage.passwordField, password);
+		}
 }

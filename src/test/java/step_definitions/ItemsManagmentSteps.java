@@ -1,8 +1,11 @@
 package step_definitions;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -60,35 +63,83 @@ public class ItemsManagmentSteps {
 
 	@When("I click Save Item button")
 	public void i_click_save_item_button() {
-		itemsPage.saveItemButton.click();
+	   itemsPage.saveItemButton.click();
 	}
-
 	@Then("The Item is added to the Item list table")
 	public void the_item_is_added_to_the_item_list_table() {
-		Assert.assertTrue(Driver.getDriver().findElement(By.xpath("//a[text()='" + itemName + "']")).isDisplayed());
-		
+		Assert.assertTrue(
+				Driver.getDriver().findElement(By.xpath("//a[text()='"+itemName+"']")).isDisplayed());
 	}
 	
-@When("I select the item {string}")
-public void i_select_the_item(String string) {
-	Assert.assertTrue(Driver.getDriver().findElement(By.xpath("//a[text()='" + itemName + "']")).isDisplayed());
+	// update item scenario steps
 	
-}
-@When("I should be on item details page")
-public void i_should_be_on_item_details_page() {
-Assert.assertTrue(false);
-}
-@When("I update the item price to {int} dollars")
-public void i_update_the_item_price_to_dollars(Integer price) {
-    itemsPage.addItemPrice.clear();
-    //itemsPage.addItemPrice.sendKeys(price,toString());
-}
-@When("I click Update Item button")
-public void i_click_update_item_button() {
-
-}
-@Then("the Item price is updated to {int} dollars")
-public void the_item_price_is_updated_to_dollars(Integer int1) {
-   
-}
+	@When("I select the item {string}")
+	public void i_select_the_item(String name) {
+		Driver.getDriver().findElement(By.xpath("//a[text()='"+itemName+"']")).click();
+	}
+	@When("I should be on item details page")
+	public void i_should_be_on_item_details_page() {
+	    Assert.assertTrue(itemsPage.editItemHeaderText.isDisplayed());
+	}
+	@When("I update the item price to {int} dollars")
+	public void i_update_the_item_price_to_dollars(Integer price) {
+		itemsPage.addItemPrice.clear();
+		itemsPage.addItemPrice.sendKeys(price.toString());
+	}
+	@When("I click Update Item button")
+	public void i_click_update_item_button() {
+	    itemsPage.updateButton.click();
+	}
+	@Then("the Item price is updated to {int} dollars")
+	public void the_item_price_is_updated_to_dollars(Integer updatedPrice) {
+		String itemXpath = "(//a[text()='"+itemName+"']//parent::td//following-sibling::td)[2]//span";
+	    String itemPrice = Driver.getDriver().findElement(By.xpath(itemXpath)).getText();
+	    System.out.println(itemPrice); //$ 800.00
+	    String trimmedPrice = itemPrice.substring(2);
+	    Assert.assertEquals(trimmedPrice, updatedPrice + ".00");
+	}
+	
+	
+	// data table item create steps
+	
+	@When("I provide item information to the fields")
+	public void i_provide_item_information_to_the_fields(DataTable dataTable) {
+		List<String> itemInfo = dataTable.asList();
+		for ( String info : itemInfo) {
+			System.out.println(info);
+		}
+		itemName = itemInfo.get(0);
+		itemsPage.addItemName.sendKeys(itemInfo.get(0));
+		itemsPage.addItemPrice.sendKeys(itemInfo.get(1));
+		itemsPage.addItemUnit.click();
+		utils.waitUntilElementVisible(itemsPage.addItem_pc_unit);
+		Driver.getDriver()
+		.findElement(By.xpath("//span[text()='"+ itemInfo.get(2) +"']")).click();
+		itemsPage.addItemDesciption.sendKeys(itemInfo.get(3));
+	}
+	
+	//Create then Delete items steps scenario
+		@When("I provide item information name {string}, price {string}, unit {string}, and description {string}")
+		public void i_provide_item_information_name_price_unit_and_description(String name, String price, String unit, String description) {
+			itemName = name + utils.randomNumber();
+			itemsPage.createItem(itemName, price, unit, description);
+		}
+		@When("I delete the Item")
+		public void i_delete_the_item() throws InterruptedException {
+		    utils.waitUntilElementVisible(itemsPage.topItemThreeDots);
+		    itemsPage.topItemThreeDots.click();
+		    utils.waitUntilElementVisible(itemsPage.deleteButton);
+		    itemsPage.deleteButton.click();
+		    utils.waitUntilElementVisible(itemsPage.deleteButtonConfirm);
+		    itemsPage.deleteButtonConfirm.click();
+		    Thread.sleep(500);
+		}
+		@Then("The Item will be deleted")
+		public void the_item_will_be_deleted() {
+		try {
+			Assert.assertFalse(Driver.getDriver().findElement(By.xpath("//a[text()='" + itemName +"']")).isDisplayed());
+		} catch (Exception e) {
+			System.out.println("failed");
+		}	
+		}
 }
