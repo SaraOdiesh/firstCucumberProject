@@ -42,7 +42,7 @@ Feature: Items Management
     And I click Save Item button
     Then The Item is added to the Item list table
 
-  @deleteAbItem @smoketest
+  @deleteAnItem @smoketest
   Scenario: As a user, I am able to create an item or a service
     When I click on the Add Item button
     Then I should be on item input page

@@ -85,7 +85,7 @@ public class DButils {
 	
 	
 	public static void main(String[] args) {
-		String query = "SELECT name, description,price FROM items where id=1435";
+		String query = "SELECT name, description,price FROM items where id=1";
 		try {
 			Connection connect = DriverManager.getConnection(dbHostName, username, password);
 			System.out.println("Connection is successful:");
