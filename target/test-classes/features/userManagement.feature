@@ -7,7 +7,7 @@ Feature: Title of your feature
     Given As a user, I am on the login page
     
     
-  @validlogin @smokeTest
+  @validlogin @smoketest
   Scenario: Successful login
     When I enter valid username and password
     And I click on the login button
