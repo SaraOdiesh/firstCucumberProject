@@ -1,6 +1,5 @@
 package runners;
 
-
 import org.junit.runner.RunWith;
 
 import io.cucumber.junit.Cucumber;
@@ -14,10 +13,9 @@ import io.cucumber.junit.CucumberOptions;
 		         "json:test_results/cucumber_report.json"},
        features = "./src/test/resources/features",
            glue = "step_definitions", 
-           tags = "@createItemWithDataTable"
+           tags = "@regession"
        
                     )
-
-public class TestRunner {
+public class RegressionRunner {
 
 }

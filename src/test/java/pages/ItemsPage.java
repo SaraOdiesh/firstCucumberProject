@@ -1,104 +1,138 @@
 package pages;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import utilites.BrowserUtils;
 import utilites.Driver;
 
 public class ItemsPage {
 
 	
+
 	public ItemsPage() {
 		PageFactory.initElements(Driver.getDriver(), this);
 	}
 
-	@FindBy (xpath = "//h3[text()='Items']")
+	@FindBy(xpath = "//h3[text()='Items']")
 	public WebElement itemsPageHeaderText;
 
-	@FindBy (xpath = "//button[text()=' Add Item']")
+	@FindBy(xpath = "//button[text()=' Add Item']")
 	public WebElement addItemButton;
 
-	@FindBy (xpath = "//h3[text()='New Item']")
+	@FindBy(xpath = "//h3[text()='New Item']")
 	public WebElement addItemPageHeaderText;
 
-	@FindBy (xpath = "(//input[@type='text'])[2]")
+	@FindBy(xpath = "(//input[@type='text'])[2]")
 	public WebElement addItemName;
 
-	@FindBy (xpath = "//div[text()='Price ']//parent::label//following-sibling::div/input")
+	@FindBy(xpath = "//div[text()='Price ']//parent::label//following-sibling::div/input")
 	public WebElement addItemPrice;
 
-	@FindBy (xpath = "//div[text()='select unit']//preceding::input[1]")
+	@FindBy(xpath = "//div[text()='select unit']//preceding::input[1]")
 	public WebElement addItemUnit;
 
-	@FindBy (xpath = "//span[text()='pc']")
+	@FindBy(xpath = "//span[text()='pc']")
 	public WebElement addItem_pc_unit;
+	
+	@FindBy(xpath = "//span[text()='%s']")
+	public WebElement unitOptions;
 
-	@FindBy (name = "description")
+	@FindBy(name = "description")
 	public WebElement addItemDesciption;
 
-	@FindBy (xpath = "//button[text()=' Save Item']")
+	@FindBy(xpath = "//button[text()=' Save Item']")
 	public WebElement saveItemButton;
 
-	//a[text()='Soccer']
-	
-	
-	@FindBy (xpath = "//h3[text()='Edit Item']")
+	// a[text()='Soccer']
+
+	@FindBy(xpath = "//h3[text()='Edit Item']")
 	public WebElement editItemHeaderText;
-	
-	@FindBy (xpath = "//button[text()=' Update Item']")
+
+	@FindBy(xpath = "//button[text()=' Update Item']")
 	public WebElement updateButton;
 	
+	@FindBy(xpath= "//button[text()='Filter ']")
+	public WebElement filterButton;
 	
-	@FindBy (xpath = "//input[@class='font-base block w-full sm:text-sm border-gray-200 rounded-md text-black focus:ring-primary-400 focus:border-primary-400']")
+	@FindBy (xpath = "//div[@name='name']")
 	public WebElement filterNameBox;
 	
-	@FindBy (xpath = "//h3[text()='%s']")
-	public WebElement itemNameInItemsTable;
+	@FindBy(xpath = "//a[text()='%s']")
+	public WebElement itemNameInTheItemsTable;
 	
-	@FindBy (xpath = "(//div[@class='relative inline-block h-full text-left'])[3]")
-	public WebElement topItemThreeDots;
+	@FindBy(xpath = "(//button[contains(@id, 'headlessui')])[3]")
+	public WebElement filterItem3dot;
 	
-	
-	//@FindBy (xpath = "//a[text()=' Delete']")
-	//public WebElement filter3dotDeleteBtn;
-	
-	
-	@FindBy (xpath = "(//a[normalize-space()='Delete'])[1]")
-	public WebElement deleteButton;
+	@FindBy (xpath = "//a[text()=' Delete']")
+	public WebElement filter3dotDeleteBtn;
 	
 	@FindBy (xpath = "//button[text()='Ok']")
-	public WebElement deleteButtonConfirm;
+	public WebElement itemDeleteOkayBtn;
 	
 	@FindBy (xpath = "//span[text()='No Results Found']")
-	public WebElement filterNoResultsFoundMessage;
+	public WebElement filterNoResultFoundMessage;
 	
+	@FindBy (xpath = "//p[contains(text(), 'Success!')]")
+	public WebElement itemCreateSuccessMessage;
+
+	/*
+	 * In ItemsPage class, create a method which accepts 4 parameters, itemName,
+	 * itemPrice, itemUnit, and itemDescription and based on these parameters,
+	 * implement the item creation logic in the method.
+	 * 
+	 * Acceptance criteria: You should be able to call the method and provide 4
+	 * parameters, and the method should create an item in the items page.
+	 * 
+	 * Note: just implement the item creation part starting with itemName till the
+	 * Add Item button.
+	 */
+
 	
-	@FindBy (xpath = "//th[contains(text(),'Name')]")
-	public WebElement nameDisplays;
+    BrowserUtils utils = new BrowserUtils();
 	
-	@FindBy (xpath =  "//th[contains(text(),'Unit')])")
-	public WebElement unitDisplays;
-	
-	@FindBy (xpath = "//th[contains(text(),'Price')]")
-	public WebElement priceDisplays;
-	
-	@FindBy (xpath = " //th[contains(text(),'Added On')]")
-	public WebElement addOnDisplays;  
-	
-	
-	
-	BrowserUtils utils = new BrowserUtils();
-	public void createItem(String itemName, String itemPrice, String itemUnit, String itemDescription) {
+	public void createAnItem(String itemName, String itemPrice, String itemUnit, String itemDes) {
 		addItemName.sendKeys(itemName);
 		addItemPrice.sendKeys(itemPrice);
 		addItemUnit.click();
 		utils.waitUntilElementVisible(addItem_pc_unit);
-	    Driver.getDriver().findElement(By.xpath("//span[text()='"+itemUnit+"']")).click();
-	    addItemDesciption.sendKeys(itemDescription);
+//		unitOptions.findElement(
+//				By.xpath(String.format(unitOptions.getAttribute("xpath"), itemUnit))).click();
+		Driver.getDriver().findElement(By.xpath("//span[text()='"+itemUnit+"']")).click();
+		addItemDesciption.sendKeys(itemDes);
+		saveItemButton.click();
 	}
 	
-
+	
+	
+	public void deleteAnItem(String name) throws InterruptedException {
+		if (!filterNameBox.isDisplayed()) {
+			Thread.sleep(10000);
+			utils.waitUntilElementVisible(filterButton);
+			filterButton.click();
+			utils.waitUntilElementVisible(filterNameBox);
+			utils.actionsSendKeys(filterNameBox, name);
+		}
+		
+//		itemNameInTheItemsTable.findElement(
+//				By.xpath(String.format(itemNameInTheItemsTable.getAttribute("xpath"), name))).isDisplayed();
+		Assert.assertTrue(Driver.getDriver().findElement(By.xpath("//a[text()='"+name+"']")).isDisplayed());
+		
+		utils.waitUntilElementVisible(filterItem3dot);
+		Thread.sleep(2000);
+		utils.actionsClick(filterItem3dot);
+		//filterItem3dot.click();
+		utils.waitUntilElementVisible(filter3dotDeleteBtn);
+		utils.actionsClick(filter3dotDeleteBtn);
+		//filter3dotDeleteBtn.click();
+		utils.waitUntilElementVisible(itemDeleteOkayBtn);
+		//itemDeleteOkayBtn.click();
+		utils.actionsClick(itemDeleteOkayBtn);
+	}
+	
+	
 }
+
+
