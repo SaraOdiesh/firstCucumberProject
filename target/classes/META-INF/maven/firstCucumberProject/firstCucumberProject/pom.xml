@@ -65,7 +65,7 @@
 				<configuration>
 					<testFailureIgnore>false</testFailureIgnore>
 					<includes>
-						<include>**/TestRunner.java</include>
+						<include>**/smokeTestRunner.java</include>
 					</includes>
 				</configuration>
 			</plugin>
