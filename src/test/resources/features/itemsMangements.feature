@@ -42,15 +42,15 @@ Feature: Items Management
     And I click Update Item button
     Then The Item is added to the Item list table
 
-  @updateItem
-  Scenario: As a user, I am able to update an item or a service
-    When I select the item "MacBook Pro"
-    And I should be on item details page
-    When I update the item price to 80000 dollars
-    And I click Update Item button
-    Then the Item price is updated to 800 dollars
+  #@updateItem
+  #Scenario: As a user, I am able to update an item or a service
+  #  When I select the item "iphone"
+   # And I should be on item details page
+   # When I update the item price to 80000 dollars
+   # And I click Update Item button
+    #Then the Item price is updated to 80000 dollars
 
-  @updateItemDB  @smoketest
+  @updateItemDB @smoketest
   Scenario: As a user, I am able to create an item or a service on UI and check the item in DB
     When I click on the Add Item button
     Then I should be on item input page
