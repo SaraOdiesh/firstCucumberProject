@@ -33,7 +33,7 @@ Feature: Items Management
     When I delete the item created above
     Then The item is no longer in the items list table
 
-  @createItemWithDataTable @smoketest
+  @createItemWithDataTable
   Scenario: As a user, I am able to create an item or a service
     When I click on the Add Item button
     Then I should be on item input page
@@ -44,13 +44,13 @@ Feature: Items Management
 
   @updateItem
   Scenario: As a user, I am able to update an item or a service
-    When I select the item "iphone"
+    When I select the item "MacBook Pro"
     And I should be on item details page
     When I update the item price to 80000 dollars
     And I click Update Item button
     Then the Item price is updated to 800 dollars
 
-  @updateItemDB
+  @updateItemDB  @smoketest
   Scenario: As a user, I am able to create an item or a service on UI and check the item in DB
     When I click on the Add Item button
     Then I should be on item input page

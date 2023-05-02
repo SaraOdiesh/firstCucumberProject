@@ -17,6 +17,6 @@ import io.cucumber.junit.CucumberOptions;
        
                     )
 
-public class smokeTest {
+public class SmokeTestRunner {
 
 }
