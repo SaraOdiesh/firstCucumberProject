@@ -78,7 +78,7 @@
 				<configuration>
 					<testFailureIgnore>true</testFailureIgnore>
 					<includes>
-						<include>**/SmokeTestRunner.java</include>
+						<include>**/TestRunner.java</include>
 					</includes>
 				</configuration>
 			</plugin>
