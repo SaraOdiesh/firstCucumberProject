@@ -3,10 +3,7 @@ package pages;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
-import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
-
-
 import org.testng.*;
 import org.testng.annotations.*;
 import io.restassured.response.Response;
