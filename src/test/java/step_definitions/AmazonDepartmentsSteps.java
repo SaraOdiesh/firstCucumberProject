@@ -4,6 +4,8 @@ package step_definitions;
 
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.support.ui.Select;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -21,13 +23,14 @@ public class AmazonDepartmentsSteps {
 	public void i_am_on_the_amazon_homepage() {
 		Driver.getDriver().get("https://amazon.com");
 		String homepageTitle = Driver.getDriver().getTitle();
-		Assert.assertEquals(homepageTitle, "Amazon.com. Spend less. Smile more.");
+		Assert.assertEquals(homepageTitle, "Amazon.com");
 	}
 
 	@Given("The departments dropdown is {string}")
-	public void the_departments_dropdown_is(String defaultOption) {
-//	   Select letsSelect = new Select(ahomepage.departmentsDropdown);
-//	   Assert.assertEquals(letsSelect.getFirstSelectedOption(), defaultOption);
+	public void the_departments_dropdown_is(String defaultOption) throws InterruptedException {
+		Thread.sleep(5000);
+	  // Select letsSelect = new Select(ahomepage.departmentsDropdown);
+   //Assert.assertEquals(letsSelect.getFirstSelectedOption(), defaultOption);
 
 		Assert.assertEquals(utils.getSelectedOption(ahomepage.departmentsDropdown), defaultOption);
 

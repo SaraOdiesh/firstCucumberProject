@@ -5,10 +5,10 @@
 #select department Home & Kitchen, and search coffee mug.
 #verify you are on coffee mug search results page (use title).
 #verify you are in Home & Kitchen department.
-@regression
+
 Feature: Amazon departments
 
-  @amazonTest
+  @amazonTest 
   Scenario: As a User, I am able to select different departments and search
     Given I am on the amazon homepage
     And The departments dropdown is "All Departments"

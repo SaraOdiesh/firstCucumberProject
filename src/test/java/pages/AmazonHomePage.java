@@ -13,13 +13,16 @@ public class AmazonHomePage {
 	public AmazonHomePage() {
 		PageFactory.initElements(Driver.getDriver(), this);
 	}
-
+	
+	
 	@FindBy (id = "searchDropdownBox")
 	public WebElement departmentsDropdown;
-
+	
 	@FindBy (id = "twotabsearchtextbox")
 	public WebElement searchField;
-
+	
 	@FindBy (id = "nav-search-submit-button")
 	public WebElement searchButton;
 }
+
+
